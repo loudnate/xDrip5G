@@ -335,6 +335,16 @@ public class TransmitterManager: TransmitterDelegate {
             ))
         }
 
+        // Filter out future-dated events
+        // Stopgap measure for the issue described in https://github.com/LoopKit/Loop/issues/2087
+        events = events.filter { event in
+            if event.date > Date() {
+                log.error("Future-dated event detected: %{public}@", String(describing: event))
+                return false
+            }
+            return true
+        }
+
         if !events.isEmpty {
             shareManager.delegate.notify { delegate in
                 delegate?.cgmManager(self.shareManager, hasNew: events)
