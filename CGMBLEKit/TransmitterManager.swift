@@ -483,7 +483,7 @@ public class G6CGMManager: TransmitterManager, CGMManager {
     public let isOnboarded = true   // No distinction between created and onboarded
 
     public var appURL: URL? {
-        return nil
+        return URL(string: "dexcomg6://")
     }
 
     public override var device: HKDevice? {
